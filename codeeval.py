@@ -66,6 +66,7 @@ def format_example(ex):
 
 
 def main():
+    os.chdir('challenges')
     generated_url = URL(index)
     request = requests.get(generated_url)
     soup = BeautifulSoup(request.text)
