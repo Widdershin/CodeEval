@@ -108,6 +108,8 @@ def main():
             valid_files.append(int(fname_prefix))
     prefix = max(valid_files) + 1
 
+    prefix = str(prefix).zfill(3)
+
     
     file_name = "{}-{}.py".format(prefix, stripped_name)
     if input_ex:
