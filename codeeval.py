@@ -44,13 +44,13 @@ with open(input_file_name) as input_file:
 
 ###### /IO Boilerplate ######
 
-
-
 """
 
 DEFAULT_CODE = """
 def main():
     pass
+
+
 
 if __name__ == '__main__':
     main()
@@ -89,7 +89,7 @@ def main():
     output_desc = pop_tag(tags)
 
     if tags[0].name == "pre":
-        output_desc += format_example(output_desc)
+        output_desc += format_example(pop_tag(tags))
 
     title = content.h2.text
 

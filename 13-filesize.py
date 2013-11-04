@@ -18,15 +18,15 @@ Output Sample:
     Print the size of the file in bytes.
 e.g.
 
-    
-        Print the size of the file in bytes.
-    e.g.
-    
+    55
 
 """
+import sys
+import os
 
 def main():
-    pass
+    file_name = sys.argv[1]
+    print os.path.getsize(file_name)
 
 if __name__ == '__main__':
     main()
