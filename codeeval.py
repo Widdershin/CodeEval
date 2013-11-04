@@ -39,65 +39,65 @@ else:
     input_file_name = sys.argv[1]
 
 with open(input_file_name) as input_file:
-	input_data = input_file.read()
+    input_data = input_file.read()
 """
 
 DEFAULT_CODE = """
 def main():
-	pass
+    pass
 
 if __name__ == '__main__':
-	main()
+    main()
 """
 
 def format_example(ex):
-	output = ""
-	for line in ex.split('\n'):
-		output += "\n    {}".format(line)
+    output = ""
+    for line in ex.split('\n'):
+        output += "\n    {}".format(line)
 
-	output += "\n"
+    output += "\n"
 
-	return output
+    return output
 
 
 def main():
-	generated_url = URL(index)
-	request = requests.get(generated_url)
-	soup = BeautifulSoup(request.text)
+    generated_url = URL(index)
+    request = requests.get(generated_url)
+    soup = BeautifulSoup(request.text)
 
-	content = soup.find(id='requisition')
+    content = soup.find(id='requisition')
 
-	description, input_desc, output_desc = map(lambda x: x.text, content.find_all('p'))
+    description, input_desc, output_desc = map(lambda x: x.text, content.find_all('p'))
 
-	input_ex = ""
+    input_ex = ""
 
-	if input_desc.strip() != "There is no input for this program.":
-		input_ex = content.find_all('pre')[0].text
-		input_desc += format_example(input_ex)
+    if input_desc.strip() != "There is no input for this program.":
+        input_ex = content.find_all('pre')[0].text
+        input_desc += format_example(input_ex)
 
-	output_desc += format_example(content.find_all('pre')[-1].text)
+    output_desc += format_example(content.find_all('pre')[-1].text)
 
-	title = content.h2.text
+    title = content.h2.text
 
-	stripped_name = title.strip().lower().replace(' ', '')
+    stripped_name = title.strip().lower().replace(' ', '')
 
-	prefix = max(int(fname[0]) for fname in os.listdir('.') if fname.endswith('.py') and fname[0].isdigit()) + 1
+    prefix = max(int(fname[0]) for fname in os.listdir('.') if fname.endswith('.py') and fname[0].isdigit()) + 1
 
-	file_name = "{}-{}.py".format(prefix, stripped_name)
-	if input_ex:
-		input_ex_file_name = "{}-{}-in.txt".format(prefix, stripped_name)
+    file_name = "{}-{}.py".format(prefix, stripped_name)
+    if input_ex:
+        input_ex_file_name = "{}-{}-in.txt".format(prefix, stripped_name)
 
-	with open(file_name, 'w') as open_file:
-		open_file.write(FILE_CONTENTS.format(url=generated_url, title=title, challenge=description, input_desc=input_desc, output_desc=output_desc))
+    with open(file_name, 'w') as open_file:
+        open_file.write(FILE_CONTENTS.format(url=generated_url, title=title, challenge=description, input_desc=input_desc, output_desc=output_desc))
 
-		if input_ex:
-			open_file.write(INPUT_CONTENTS.format(input_ex_file_name))
+        if input_ex:
+            open_file.write(INPUT_CONTENTS.format(input_ex_file_name))
 
-		open_file.write(DEFAULT_CODE)
+        open_file.write(DEFAULT_CODE)
 
-	if input_ex:		
-		with open(input_ex_file_name, 'w') as input_file:
-			input_file.write(input_ex.strip())
+    if input_ex:        
+        with open(input_ex_file_name, 'w') as input_file:
+            input_file.write(input_ex.strip())
 
 if __name__ == '__main__':
-	main()
+    main()
