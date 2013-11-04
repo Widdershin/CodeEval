@@ -42,7 +42,10 @@ else:
 with open(input_file_name) as input_file:
     input_lines = map(lambda x: x.strip(), filter(lambda x: x != '', input_file.readlines()))
 
-###### IO Boilerplate ######
+###### /IO Boilerplate ######
+
+
+
 """
 
 DEFAULT_CODE = """
@@ -70,19 +73,27 @@ def main():
 
     content = soup.find(id='requisition')
 
-    description, input_desc, output_desc = map(lambda x: x.text, content.find_all('p'))
+    tags = content.find_all(['p', 'pre'])
+
+    def pop_tag(tags):
+        return tags.pop(0).text
+
+    description = pop_tag(tags)
+    input_desc = pop_tag(tags)
 
     input_ex = ""
-
-    if input_desc.strip() != "There is no input for this program.":
-        input_ex = content.find_all('pre')[0].text
+    if tags[0].name == "pre":
+        input_ex = pop_tag(tags)
         input_desc += format_example(input_ex)
 
-    output_desc += format_example(content.find_all('pre')[-1].text)
+    output_desc = pop_tag(tags)
+
+    if tags[0].name == "pre":
+        output_desc += format_example(output_desc)
 
     title = content.h2.text
 
-    stripped_name = title.strip().lower().replace(' ', '')\
+    stripped_name = title.strip().lower().replace(' ', '')
 
     files = os.listdir('.')
 
@@ -97,7 +108,7 @@ def main():
             valid_files.append(int(fname_prefix))
     prefix = max(valid_files) + 1
 
-
+    
     file_name = "{}-{}.py".format(prefix, stripped_name)
     if input_ex:
         input_ex_file_name = "{}-{}-in.txt".format(prefix, stripped_name)
