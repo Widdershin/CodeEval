@@ -27,12 +27,16 @@ Input Sample:
 
 Output Sample:
 {output_desc}
-\"\"\""""
+\"\"\"
+"""
 
 INPUT_CONTENTS = """
 import sys
 
-input_file_name = sys.argv[1]
+if len(sys.argv) < 2:
+    input_file_name = "{}"
+else:
+    input_file_name = sys.argv[1]
 
 with open(input_file_name) as input_file:
 	input_data = input_file.read()
@@ -80,17 +84,18 @@ def main():
 	prefix = max(int(fname[0]) for fname in os.listdir('.') if fname.endswith('.py') and fname[0].isdigit()) + 1
 
 	file_name = "{}-{}.py".format(prefix, stripped_name)
+	if input_ex:
+		input_ex_file_name = "{}-{}-in.txt".format(prefix, stripped_name)
 
 	with open(file_name, 'w') as open_file:
 		open_file.write(FILE_CONTENTS.format(url=generated_url, title=title, challenge=description, input_desc=input_desc, output_desc=output_desc))
 
 		if input_ex:
-			open_file.write(INPUT_CONTENTS)
+			open_file.write(INPUT_CONTENTS.format(input_ex_file_name))
 
 		open_file.write(DEFAULT_CODE)
 
-	if input_ex:
-		input_ex_file_name = "{}-{}-in.txt".format(prefix, stripped_name)
+	if input_ex:		
 		with open(input_ex_file_name, 'w') as input_file:
 			input_file.write(input_ex.strip())
 
