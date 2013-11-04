@@ -82,9 +82,21 @@ def main():
 
     title = content.h2.text
 
-    stripped_name = title.strip().lower().replace(' ', '')
+    stripped_name = title.strip().lower().replace(' ', '')\
 
-    prefix = max(int(fname[0]) for fname in os.listdir('.') if fname.endswith('.py') and fname[0].isdigit()) + 1
+    files = os.listdir('.')
+
+    valid_files = []
+    for fname in files:
+        try:
+            fname_prefix = fname[:fname.index('-')]
+        except ValueError:
+            continue
+
+        if fname_prefix.isdigit():
+            valid_files.append(int(fname_prefix))
+    prefix = max(valid_files) + 1
+
 
     file_name = "{}-{}.py".format(prefix, stripped_name)
     if input_ex:
