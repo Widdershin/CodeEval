@@ -38,9 +38,10 @@ with open(input_file_name) as input_file:
 
 def main():
     for line in input_data.split('\n'):
-        x, n = map(int, line.split(','))
+        if line != '':
+            x, n = map(int, line.split(','))
 
-        print multiple_ge_size(x, n)
+            print multiple_ge_size(x, n)
 
 def multiple_ge_size(x, n):
     i = 1
