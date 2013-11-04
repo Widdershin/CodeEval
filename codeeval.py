@@ -48,8 +48,11 @@ def main():
 
 	description, input_desc, output_desc = map(lambda x: x.text, content.find_all('p'))
 
+	input_ex = ""
+
 	if input_desc.strip() != "There is no input for this program.":
-		input_desc += format_example(content.find_all('pre')[0].text)
+		input_ex = content.find_all('pre')[0].text
+		input_desc += format_example(input_ex)
 
 	output_desc += format_example(content.find_all('pre')[-1].text)
 
@@ -63,6 +66,11 @@ def main():
 
 	with open(file_name, 'w') as open_file:
 		open_file.write(FILE_CONTENTS.format(url=generated_url, title=title, challenge=description, input_desc=input_desc, output_desc=output_desc))
+
+	if input_ex:
+		input_ex_file_name = "{}-{}-in.txt".format(prefix, stripped_name)
+		with open(input_ex_file_name, 'w') as input_file:
+			input_file.write(input_ex.strip())
 
 if __name__ == '__main__':
 	main()
