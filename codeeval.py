@@ -31,6 +31,7 @@ Output Sample:
 """
 
 INPUT_CONTENTS = """
+###### IO Boilerplate ######
 import sys
 
 if len(sys.argv) < 2:
@@ -39,7 +40,9 @@ else:
     input_file_name = sys.argv[1]
 
 with open(input_file_name) as input_file:
-    input_data = input_file.read()
+    input_lines = map(lambda x: x.strip(), filter(lambda x: x != '', input_file.readlines()))
+
+###### IO Boilerplate ######
 """
 
 DEFAULT_CODE = """
