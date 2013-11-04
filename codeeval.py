@@ -29,6 +29,23 @@ Output Sample:
 {output_desc}
 \"\"\""""
 
+INPUT_CONTENTS = """
+import sys
+
+input_file_name = sys.argv[1]
+
+with open(input_file_name) as input_file:
+	input_data = input_file.read()
+"""
+
+DEFAULT_CODE = """
+def main():
+	pass
+
+if __name__ == '__main__':
+	main()
+"""
+
 def format_example(ex):
 	output = ""
 	for line in ex.split('\n'):
@@ -66,6 +83,11 @@ def main():
 
 	with open(file_name, 'w') as open_file:
 		open_file.write(FILE_CONTENTS.format(url=generated_url, title=title, challenge=description, input_desc=input_desc, output_desc=output_desc))
+
+		if input_ex:
+			open_file.write(INPUT_CONTENTS)
+
+		open_file.write(DEFAULT_CODE)
 
 	if input_ex:
 		input_ex_file_name = "{}-{}-in.txt".format(prefix, stripped_name)
