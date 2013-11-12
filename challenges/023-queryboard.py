@@ -73,7 +73,6 @@ with open(input_file_name) as input_file:
 BOARD_SIZE = 256
 
 class Board(object):
-
     def __init__(self, board_size):
         self.size = board_size
         self.data = [[0 for i in range(board_size)] for j in range(board_size)]
