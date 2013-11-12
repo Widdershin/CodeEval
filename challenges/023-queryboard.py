@@ -76,7 +76,10 @@ class Board(object):
     def __init__(self, board_size):
         self.size = board_size
         self.data = [[0 for i in range(board_size)] for j in range(board_size)]
-        self.commands = {'SetCol': self.set_column, 'SetRow': self.set_row, 'QueryCol': self.query_column, 'QueryRow': self.query_row}
+        self.commands = {'SetCol': self.set_column, 
+                         'SetRow': self.set_row, 
+                         'QueryCol': self.query_column, 
+                         'QueryRow': self.query_row}
 
     def print_board(self):
         for row in self.data:
