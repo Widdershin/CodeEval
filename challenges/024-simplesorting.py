@@ -45,7 +45,7 @@ with open(input_file_name) as input_file:
 def main():
     for line in input_lines:
         numbers = map(float, line.split(' '))
-        print " ".join(map(lambda x: "{:.3f}".format(x), sorted(numbers)))
+        print " ".join(map("{:.3f}".format, sorted(numbers)))
 
 
 if __name__ == '__main__':
